@@ -13,9 +13,7 @@ resource "azurerm_key_vault" "example" {
   network_acls {
     default_action = "Deny"
     bypass         = "AzureServices"
-    ip_rules = [
-      "${data.http.ifconfig.response_body}/32"
-    ]
+    ip_rules       = ["${chomp(data.http.ipv4.response_body)}/32"]
   }
 
   dynamic "access_policy" {
